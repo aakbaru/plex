@@ -1,0 +1,49 @@
+import { useApp } from "../state/AppContext";
+
+export default function Contacts() {
+  const { t } = useApp();
+  return (
+    <div className="container-page py-10 max-w-3xl">
+      <h1 className="text-3xl sm:text-4xl">{t.contacts.title}</h1>
+
+      <div className="mt-8 grid sm:grid-cols-2 gap-5">
+        <Item title={t.contacts.phone} value="+998 90 123-45-67" link="tel:+998901234567" />
+        <Item title="Email" value="info@plexhair.uz" link="mailto:info@plexhair.uz" />
+        {/* FIX: add target="_blank" rel="noreferrer" to external links */}
+        <Item title="Telegram" value="@plexhair_uz" link="https://t.me/plexhair_uz" external />
+        <Item title="Instagram" value="@plexhair.uz" link="https://instagram.com/plexhair.uz" external />
+        <Item title={t.contacts.address} value={t.contacts.addressValue} />
+        <Item title={t.contacts.hours} value={t.contacts.hoursValue} />
+      </div>
+    </div>
+  );
+}
+
+function Item({
+  title,
+  value,
+  link,
+  external,
+}: {
+  title: string;
+  value: string;
+  link?: string;
+  external?: boolean;
+}) {
+  return (
+    <div className="bg-white rounded-2xl border border-brand-100 p-5">
+      <div className="text-xs uppercase tracking-wide text-brand-700/60">{title}</div>
+      {link ? (
+        <a
+          href={link}
+          className="block mt-1 text-base text-brand-800 hover:text-brand-600"
+          {...(external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
+        >
+          {value}
+        </a>
+      ) : (
+        <div className="mt-1 text-base text-brand-800">{value}</div>
+      )}
+    </div>
+  );
+}
